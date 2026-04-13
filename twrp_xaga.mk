@@ -1,11 +1,11 @@
 #
-# Copyright (C) 2022 The TWRP Open Source Project
+# Copyright 2018 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +14,13 @@
 # limitations under the License.
 #
 
+# Release name
+PRODUCT_RELEASE_NAME := xaga
+DEVICE_PATH := device/xiaomi/$(PRODUCT_RELEASE_NAME)
+
 # Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
 # Installs gsi keys into ramdisk, to boot a developer GSI with verified boot.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
@@ -25,12 +29,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Device specific configs.
-$(call inherit-product, device/xiaomi/xaga/device.mk)
+$(call inherit-product, $(DEVICE_PATH)/device.mk)
+
+# Inherit any OrangeFox-specific settings.
+$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_xaga.mk)
 
 ## Device identifier. This must come after all inclusions.
-PRODUCT_DEVICE := xaga
-PRODUCT_NAME := twrp_xaga
+PRODUCT_DEVICE := $(PRODUCT_RELEASE_NAME)
+PRODUCT_NAME := twrp_$(PRODUCT_RELEASE_NAME)
 PRODUCT_BRAND := Redmi
 PRODUCT_MODEL := xaga
 PRODUCT_MANUFACTURER := Xiaomi
-PRODUCT_RELEASE_NAME := xaga
+

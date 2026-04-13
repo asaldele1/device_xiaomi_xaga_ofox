@@ -63,7 +63,7 @@
 /dev/fw_log_ics	          0660   wifi     wifi
 
 # FMRadio
-/dev/fm                   0660   media     media
+/dev/fm                   0660   system   system
 
 # NFC
 /dev/st21nfc              0660   nfc        radio
@@ -151,6 +151,9 @@
 # Camera
 /dev/camera_eeprom*       0660   system     camera
 
+# Charger
+/sys/class/power_supply/battery input_suspend 0660 system system
+
 #FOR VIA MODEM
 /dev/ttySDIO*             0660   radio      sdcard_rw
 /dev/ttyRB*               0660   radio      radio
@@ -206,3 +209,15 @@ subsystem mi_display
 #elliptic sensor
 /dev/elliptic0            0644   system     system
 /dev/elliptic1            0644   system     system
+
+# mius iio devices
+/dev/iio:device*                                        0660   system     system
+/sys/bus/iio/devices/iio:device* buffer/enable                  0600 system system
+/sys/bus/iio/devices/iio:device* scan_elements/in_proximity_en  0600 system system
+/sys/bus/iio/devices/iio:device* scan_elements/in_timestamp_en  0600 system system
+
+#sensor
+/dev/hf_manager           0660   system     system
+
+#dynamic sensor
+/dev/hidraw*   0660 system system
